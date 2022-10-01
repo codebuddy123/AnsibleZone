@@ -1,0 +1,13 @@
+---
+  - hosts: localhost
+    tasks:
+     - name: Example playbook sending mail to a friend
+       mail:
+         host: smtp.gmail.com
+         port: 587
+         username: xxxxxx@gmail.com
+         password: xxxxxxxx
+         sender: xxxxxx@gmail.com
+         to: xxxxxxx@gmail.com
+         subject: Hello Buddy, this is Ashish from Ansible
+         body: "hi, how are you? what are u doing now?"

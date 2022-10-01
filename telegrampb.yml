@@ -1,0 +1,8 @@
+---
+  - hosts: localhost
+    tasks:
+      - name: sending msg through telegram
+        telegram:  
+          token: xxxxxxxxxxxxxxxxxxxxxxx
+          chat_id: 'xxxxx'
+          msg: "hi to buddy"

@@ -1,0 +1,8 @@
+- hosts: localhost
+  tasks:
+    - twilio:
+        msg: All servers with webserver role are now configured.
+        account_sid: AC6424ddb06c8fa3bd63efe9de34e7cef3
+        auth_token: 9da763e4dbc52a4eee49493136a4121f
+        from_number: "+1xxxxxxxxxx"
+        to_number: "+91xxxxxxxxxx"
