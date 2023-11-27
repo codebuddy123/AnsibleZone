@@ -1,0 +1,8 @@
+---
+- name: gen hw report
+  hosts: all 
+  tasks:
+    - name: gen report
+      template:
+        src: hwreport.j2
+        dest: /root/hwreport.txt

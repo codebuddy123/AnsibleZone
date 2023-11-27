@@ -1,0 +1,42 @@
+---
+- name: create user on dev group
+  hosts: dev
+  vars_files:
+    - /home/ashish/ansible/user_list.yml
+    - /home/ashish/ansible/9.vault.yml
+  tasks:
+    - name: create a group called devops
+      group:
+        name: devops
+        state: present
+
+    - name: create users having dev profile
+      user:
+        name: "{{ item.name}}"
+        state: present
+        groups: devops
+        uid: "{{ item.uid}}"
+        password: "{{ dev_pass | password_hash('sha512')}}"
+      when: item.job == "developer"
+      loop: "{{ users }}"
+
+ 
+- hosts: prod
+  vars_files:
+    - /home/ashish/ansible/user_list.yml
+    - /home/ashish/ansible/9.vault.yml
+  tasks:
+    - name: create a group called opsmgr
+      group:
+        name: opsmgr
+        state: present
+
+    - name: create users having prod  profile
+      user:
+        name: "{{ item.name}}"
+        state: present
+        groups: opsmgr
+        uid: "{{ item.uid}}"
+        password: "{{ mgr_pass | password_hash('sha512')}}"
+      loop: "{{ users }}"
+      when: item.job == "manager"

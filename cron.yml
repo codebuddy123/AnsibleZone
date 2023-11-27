@@ -1,0 +1,15 @@
+---
+- name: cron for natasha
+  hosts: all
+  tasks:
+    - name: creating a user natasha
+      user:
+        name: natasha
+        state: present
+
+    - name: scheduling a job
+      cron:
+        name: "cron for natasha"
+        minute: "*/2"
+        job: "logger 'EX294 exam in progress'"
+        user: natasha

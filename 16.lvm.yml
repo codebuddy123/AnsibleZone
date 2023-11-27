@@ -1,0 +1,40 @@
+---
+- name: lvm playbook
+  hosts: dev
+  tasks:
+    - name: "test"
+      block:
+        - name: if vg doesnot exist, print error
+          debug:
+            msg: "vg doesnot exist"
+          when: "'research' not in ansible_lvm"
+
+        - name: create  a lvm
+          lvol:
+            vg: research
+            lv: data
+            size: 1200m
+          when: "'research' in ansible_lvm"
+
+      rescue:
+        - name: if lvm cannot be created then print 
+          debug:
+            msg: "could not create lvm of that size"
+          when: "'research' in ansible_lvm"
+
+        - name: create a lvm
+          lvol:
+            vg: research 
+            lv: data
+            size: 800m
+          when: "'research' in ansible_lvm"
+
+      always:
+        - name: format fs
+          filesystem:
+            fstype: ext4
+            dev: /dev/research/data
+          when: "'research' in ansible_lvm"
+
+
+      

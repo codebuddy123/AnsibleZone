@@ -1,0 +1,7 @@
+- name: creating a play for selinux mode.
+  hosts: all
+  vars:
+  - selinux_state: permissive
+  roles:
+  - linux-system-roles.selinux
+...

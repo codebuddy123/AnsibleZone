@@ -1,0 +1,8 @@
+---
+- name: changing selinux state
+  hosts: all
+  vars:
+    - selinux_state: permissive
+  roles:
+    - /usr/share/ansible/roles/linux-system-roles.selinux
+

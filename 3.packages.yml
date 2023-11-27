@@ -1,0 +1,26 @@
+---
+- hosts: all
+  tasks:
+    - name: install maria and php
+      yum:
+        name: " {{ item }}"
+        state: present
+      loop:
+       - mariadb
+       - php
+      when: inventory_hostname in groups['dev'] or inventory_hostname in groups['prod']
+
+    - name: install RPM dev tools
+      yum:
+        name: "@RPM Development tools"
+        state: present
+      when: inventory_hostname in groups['dev']
+
+    - name: update all packages
+      yum:
+        name: "*"
+        state: latest
+      when: inventory_hostname in groups['dev']
+
+
+ 

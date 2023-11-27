@@ -1,0 +1,4 @@
+---
+- hosts: all
+  roles:
+    - role: /home/ashish/ansible/roles/apache

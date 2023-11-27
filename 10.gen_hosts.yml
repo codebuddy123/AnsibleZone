@@ -1,0 +1,10 @@
+---
+- name: gen hosts
+  hosts: all
+  tasks: []
+- hosts: dev
+  tasks:
+    - name: gen hosts file
+      template:
+        src: /home/ashish/ansible/hosts.j2
+        dest: /etc/myhosts

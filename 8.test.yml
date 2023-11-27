@@ -1,0 +1,29 @@
+---
+- name: manage nodes for dir
+  hosts: prod
+  tasks:
+    - name: create a group
+      group:
+        name: webtest
+        state: present
+
+    - name: create a dir with ownership
+      file:
+        state: directory
+        owner: apache
+        mode: '2775'
+        path: /webtest
+        group: webtest
+
+    - name: create symlink
+      file:
+        src: /webtest
+        dest: /var/www/html/myweb
+        state: link
+        mode: '2775'
+        owner: apache
+
+    - name: cr"eate a index file
+      copy:
+        dest: /webtest/index.html
+        content: "Testing"

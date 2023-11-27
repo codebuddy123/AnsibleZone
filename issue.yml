@@ -1,0 +1,16 @@
+---
+- name: texts on managed nodes
+  hosts: all
+  tasks:
+    - name: reads on dev
+      copy:
+       content: "Development"
+       dest: /etc/issue
+      when: inventory_hostname in groups['dev']
+
+      
+    - name: reads on prod
+      copy:
+       content: "Production"
+       dest: /etc/issue
+      when: inventory_hostname in groups['prod']

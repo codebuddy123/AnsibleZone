@@ -1,0 +1,9 @@
+
+users:
+- name: adam
+  job: developer
+  uid: 3000
+
+- name: gabriel
+  job: manager
+  uid: 3002    

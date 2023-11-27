@@ -1,0 +1,5 @@
+---
+- name: use squid role
+  hosts: dev
+  roles:
+  - /home/ashish/ansible/roles/squid
