@@ -1,0 +1,17 @@
+- name: Playbook to setup Nginx
+  hosts: all
+  become: yes
+  tasks: 
+  - name: Installation of Nginx Software on Managed Nodes
+    package: 
+      name: nginx
+      state: latest
+  - name: Copy Index.html 
+    copy:
+      src: index.html 
+      dest: /usr/share/nginx/html 
+  - name: Start the Service 
+    service:
+      name: nginx 
+      state: started
+      enabled: true

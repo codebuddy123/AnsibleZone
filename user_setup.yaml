@@ -1,0 +1,37 @@
+- name: Create a user, Add to the Sudoers, Enable Password Based Auth 
+  hosts: all
+  become: yes
+  tasks:
+  - name: Create a user
+    user:
+      name: ashish
+      password: "{{ 'ash@123' | password_hash('sha512', 'fixedsaltvalue') }}"
+      shell: /bin/bash
+
+  - name: Adding him to the Sudoers file 
+    lineinfile:
+      path: /etc/sudoers.d/mysudoers
+      create: yes # it will create if the file doesn't exist
+      mode: 0644
+      line: "ashish ALL=(ALL) NOPASSWD:ALL"
+
+  - name: Enabling Password Based Auth
+    lineinfile:
+      path: /etc/ssh/sshd_config.d/mysshconfig.conf
+      create: yes
+      mode: 0644
+      regexp: "^PasswordAuthentication"  # If the pattern matches, it will change the value
+      line: "PasswordAuthentication yes" # If the pattern doesn't exist, it will add a new line 
+                                         # as PasswordAuthentication yes
+  - name: Restart the sshd service 
+    service: 
+      name: sshd
+      state: restarted  
+
+  # As the hash changes everytime, creation of a user is not idempotent and
+  # there is an deprection warning of crypt lib.
+  # To fix this issue install pip and passlib on a Control Node.
+  # sudo yum install pip -y
+  # pip3 install passlib
+  # Now fix the Salt value. This will remove the warning of crypt lib 
+  # deprecation warning and fix the idempotency of first task in the playbook.
